@@ -6,24 +6,42 @@
 <style>
 body{
 font-family: Arial;
-background:pink;
+background:#f7b6c2;
 text-align:center;
 }
 
 .card{
 background:white;
+width:300px;
+margin:auto;
 padding:20px;
-margin:20px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+img{
+width:150px;
 border-radius:10px;
 }
 
 button{
-padding:10px;
 margin:10px;
+padding:10px 20px;
 font-size:16px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+.like{
+background:#ff4d6d;
+color:white;
+}
+
+.pass{
+background:#ccc;
 }
 </style>
-
 </head>
 
 <body>
@@ -31,26 +49,53 @@ font-size:16px;
 <h1>❤️ My Dating App</h1>
 
 <div class="card">
+<img id="photo" src="https://randomuser.me/api/portraits/men/32.jpg">
+<h2 id="name">Alex, 24</h2>
+<p id="bio">Loves music and travel</p>
 
-<img src="https://randomuser.me/api/portraits/men/32.jpg" width="200">
-
-<h2>Alex, 24</h2>
-
-<p>Loves music and travel</p>
-
-<button onclick="like()">❤️ Like</button>
-<button onclick="pass()">❌ Pass</button>
-
+<button class="like" onclick="nextProfile()">❤️ Like</button>
+<button class="pass" onclick="nextProfile()">❌ Pass</button>
 </div>
 
 <script>
 
-function like(){
-alert("You liked this profile!");
+const profiles = [
+{
+name:"Alex, 24",
+bio:"Loves music and travel",
+photo:"https://randomuser.me/api/portraits/men/32.jpg"
+},
+{
+name:"Sarah, 22",
+bio:"Coffee lover ☕",
+photo:"https://randomuser.me/api/portraits/women/44.jpg"
+},
+{
+name:"Michael, 26",
+bio:"Gym and hiking",
+photo:"https://randomuser.me/api/portraits/men/76.jpg"
+},
+{
+name:"Emma, 23",
+bio:"Artist and photographer",
+photo:"https://randomuser.me/api/portraits/women/65.jpg"
+}
+]
+
+let index = 0
+
+function nextProfile(){
+
+index++
+
+if(index >= profiles.length){
+index = 0
 }
 
-function pass(){
-alert("You passed.");
+document.getElementById("name").innerText = profiles[index].name
+document.getElementById("bio").innerText = profiles[index].bio
+document.getElementById("photo").src = profiles[index].photo
+
 }
 
 </script>
