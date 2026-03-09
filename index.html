@@ -1,50 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Dating App</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#ff4d6d;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.card{
+background:white;
+width:300px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+text-align:center;
+padding:20px;
+}
+
+img{
+width:100%;
+border-radius:10px;
+}
+
+h2{
+margin:10px 0;
+}
+
+p{
+color:gray;
+}
+
+.buttons{
+margin-top:15px;
+}
+
+button{
+padding:10px 20px;
+margin:5px;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+}
+
+.like{
+background:#4CAF50;
+color:white;
+}
+
+.pass{
+background:#f44336;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<img id="photo" src="https://randomuser.me/api/portraits/men/32.jpg">
+
+<h2 id="name">Alex, 24</h2>
+
+<p id="bio">Loves music and travel</p>
+
+<div class="buttons">
+
+<button class="like" onclick="like()">❤️ Like</button>
+
+<button class="pass" onclick="pass()">❌ Pass</button>
+
+</div>
+
+</div>
+
 <script>
 
 const profiles = [
+
 {
-name: "Alex, 24",
-bio: "Loves music and travel",
-photo: "https://randomuser.me/api/portraits/men/32.jpg"
+name:"Alex, 24",
+bio:"Loves music and travel",
+photo:"https://randomuser.me/api/portraits/men/32.jpg"
 },
+
 {
-name: "Sarah, 22",
-bio: "Coffee lover ☕",
-photo: "https://randomuser.me/api/portraits/women/44.jpg"
+name:"Sarah, 22",
+bio:"Coffee lover ☕",
+photo:"https://randomuser.me/api/portraits/women/44.jpg"
 },
+
 {
-name: "Michael, 26",
-bio: "Gym and hiking",
-photo: "https://randomuser.me/api/portraits/men/76.jpg"
+name:"Michael, 26",
+bio:"Gym and hiking",
+photo:"https://randomuser.me/api/portraits/men/76.jpg"
 },
+
 {
-name: "Emma, 23",
-bio: "Artist and photographer",
-photo: "https://randomuser.me/api/portraits/women/65.jpg"
+name:"Emma, 23",
+bio:"Artist and photographer",
+photo:"https://randomuser.me/api/portraits/women/65.jpg"
 }
+
 ];
 
-let index = 0;
+let index=0;
+
+function showProfile(){
+
+document.getElementById("photo").src=profiles[index].photo;
+document.getElementById("name").innerText=profiles[index].name;
+document.getElementById("bio").innerText=profiles[index].bio;
+
+}
 
 function nextProfile(){
 
 index++;
 
-if(index >= profiles.length){
-index = 0;
+if(index>=profiles.length){
+index=0;
 }
 
-document.querySelector("img").src = profiles[index].photo;
-document.querySelector("h2").innerText = profiles[index].name;
-document.querySelector("p").innerText = profiles[index].bio;
+showProfile();
 
 }
 
 function like(){
+
+alert("You liked this profile ❤️");
 nextProfile();
+
 }
 
 function pass(){
+
 nextProfile();
+
 }
 
 </script>
+
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+<title>My Dating App</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#ff4d6d;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.card{
+background:white;
+width:300px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+text-align:center;
+padding:20px;
+}
+
+img{
+width:100%;
+border-radius:10px;
+}
+
+h2{
+margin:10px 0;
+}
+
+p{
+color:gray;
+}
+
+.buttons{
+margin-top:15px;
+}
+
+button{
+padding:10px 20px;
+margin:5px;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+}
+
+.like{
+background:#4CAF50;
+color:white;
+}
+
+.pass{
+background:#f44336;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<img id="photo" src="https://randomuser.me/api/portraits/men/32.jpg">
+
+<h2 id="name">Alex, 24</h2>
+
+<p id="bio">Loves music and travel</p>
+
+<div class="buttons">
+
+<button class="like" onclick="like()">❤️ Like</button>
+
+<button class="pass" onclick="pass()">❌ Pass</button>
+
+</div>
+
+</div>
+
+<script>
+
+const profiles = [
+
+{
+name:"Alex, 24",
+bio:"Loves music and travel",
+photo:"https://randomuser.me/api/portraits/men/32.jpg"
+},
+
+{
+name:"Sarah, 22",
+bio:"Coffee lover ☕",
+photo:"https://randomuser.me/api/portraits/women/44.jpg"
+},
+
+{
+name:"Michael, 26",
+bio:"Gym and hiking",
+photo:"https://randomuser.me/api/portraits/men/76.jpg"
+},
+
+{
+name:"Emma, 23",
+bio:"Artist and photographer",
+photo:"https://randomuser.me/api/portraits/women/65.jpg"
+}
+
+];
+
+let index=0;
+
+function showProfile(){
+
+document.getElementById("photo").src=profiles[index].photo;
+document.getElementById("name").innerText=profiles[index].name;
+document.getElementById("bio").innerText=profiles[index].bio;
+
+}
+
+function nextProfile(){
+
+index++;
+
+if(index>=profiles.length){
+index=0;
+}
+
+showProfile();
+
+}
+
+function like(){
+
+alert("You liked this profile ❤️");
+nextProfile();
+
+}
+
+function pass(){
+
+nextProfile();
+
+}
+
+</script>
+
+</body>
+</html>
