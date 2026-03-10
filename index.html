@@ -1,258 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>My Dating App</title>
+<title>Swipe App</title>
 
 <style>
-
 body{
-font-family: Arial;
 background:#ff4d6d;
+font-family:Arial;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
+margin:0;
 }
 
 .card{
 background:white;
-width:300px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.2);
+width:260px;
+padding:15px;
+border-radius:10px;
 text-align:center;
-padding:20px;
-transition: transform 0.3s ease;
+box-shadow:0 5px 20px rgba(0,0,0,0.3);
+transition:0.3s;
 }
 
-img{
+.card img{
 width:100%;
 border-radius:10px;
 }
 
-h2{
-margin:10px 0;
-}
-
-p{
-color:gray;
-}
-
-.buttons{
-margin-top:15px;
-}
-
 button{
-padding:10px 20px;
-margin:5px;
+padding:8px 15px;
+margin:10px;
 border:none;
-border-radius:8px;
+border-radius:5px;
 font-size:16px;
 cursor:pointer;
 }
 
 .like{
-background:#4CAF50;
+background:#ff4d6d;
 color:white;
 }
 
 .pass{
-background:#f44336;
-color:white;
+background:#ddd;
 }
 
-</style>
-
-</head>
-
-<body> 
-<div id="match" style="
+#match{
 display:none;
-position:fixed;
+position:absolute;
 top:40%;
-left:50%;
-transform:translate(-50%, -50%);
-background:#ff4d6d;
+font-size:30px;
 color:white;
-padding:25px;
-font-size:28px;
-border-radius:12px;
-z-index:999;
-text-align:center;
-">
-❤️ IT'S A MATCH!
-</div>
-
-<script>
-
-const profiles = [
-
-{
-name:"Alex, 24",
-bio:"Loves music and travel",
-photo:"https://randomuser.me/api/portraits/men/32.jpg"
-},
-
-{
-name:"Sarah, 22",
-bio:"Coffee lover ☕",
-photo:"https://randomuser.me/api/portraits/women/44.jpg"
-},
-
-{
-name:"Michael, 26",
-bio:"Gym and hiking",
-photo:"https://randomuser.me/api/portraits/men/76.jpg"
-},
-
-{
-name:"Emma, 23",
-bio:"Artist and photographer",
-photo:"https://randomuser.me/api/portraits/women/65.jpg"
-},
-{
-name:"Linda, 23",
-bio:"Loves cooking and dancing 💃",
-photo:"https://randomuser.me/api/portraits/women/65.jpg"
-},
-{
-name:"Mike, 27",
-bio:"Gym lover and traveler ✈️",
-photo:"https://randomuser.me/api/portraits/men/76.jpg"
-}
-];
-
-let index=0;
-
-function showProfile(){
-
-document.getElementById("photo").src=profiles[index].photo;
-document.getElementById("name").innerText=profiles[index].name;
-document.getElementById("bio").innerText=profiles[index].bio;
-
-}
-
-function nextProfile(){
-
-index++;
-
-if(index >= profiles.length){
-index = 0;
-}
-
-showProfile();
-
-}
-
-function like(){
-
-document.querySelector(".card").style.transform = "translateX(400px) rotate(20deg)";
-document.getElementById("match").style.display = "block";
-
-setTimeout(function(){
-
-document.getElementById("match").style.display = "none";
-document.querySelector(".card").style.transform = "translateX(0)";
-nextProfile();
-
-},1500);
-
-}
-  
-
-
-
-
-function pass(){
-
-document.querySelector(".card").style.transform = "translateX(-400px) rotate(-20deg)";
-
-setTimeout(function(){
-document.querySelector(".card").style.transform = "translateX(0)";
-nextProfile();
-},300);
-
-
-
-}
-let startX = 0;
-
-document.querySelector(".card").addEventListener("touchstart", function(e){
-startX = e.touches[0].clientX;
-});
-
-document.querySelector(".card").addEventListener("touchend", function(e){
-
-let endX = e.changedTouches[0].clientX;
-
-if(endX - startX > 50){
-like();
-}
-
-if(startX - endX > 50){
-pass();
-}
-
-});
-
-</script>
-
-<style>
-
-body{
-font-family: Arial;
-background:#ff4d6d;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-
-.card{
-background:white;
-width:300px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.2);
-text-align:center;
-padding:20px;
-}
-
-img{
-width:100%;
-border-radius:10px;
-}
-
-h2{
-margin:10px 0;
-}
-
-p{
-color:gray;
-}
-
-.buttons{
-margin-top:15px;
-}
-
-button{
-padding:10px 20px;
-margin:5px;
-border:none;
-border-radius:8px;
-font-size:16px;
-cursor:pointer;
-}
-
-.like{
-background:#4CAF50;
-color:white;
-}
-
-.pass{
-background:#f44336;
-color:white;
-}
-#card{
-transition: transform 0.3s ease;
+font-weight:bold;
 }
 </style>
 
@@ -260,26 +61,22 @@ transition: transform 0.3s ease;
 
 <body>
 
-<div class="card" id="card">
+<div id="match">❤️ IT'S A MATCH!</div>
 
-<img id="photo" src="https://randomuser.me/api/portraits/men/32.jpg">
+<div class="card">
 
-<h2 id="name">Alex, 24</h2>
+<img id="photo" src="">
+<h2 id="name"></h2>
+<p id="bio"></p>
 
-<p id="bio">Loves music and travel</p>
-
-<div class="buttons">
-
-<button onclick="like()">❤️ Like</button>
-<button onclick="pass()">❌ Pass</button>
-
-</div>
+<button class="like" onclick="like()">❤️ Like</button>
+<button class="pass" onclick="pass()">❌ Pass</button>
 
 </div>
 
 <script>
 
-const profiles = [
+let profiles = [
 
 {
 name:"Alex, 24",
@@ -288,62 +85,55 @@ photo:"https://randomuser.me/api/portraits/men/32.jpg"
 },
 
 {
-name:"Sarah, 22",
-bio:"Coffee lover ☕",
+name:"Emma, 22",
+bio:"Coffee lover and dancer",
 photo:"https://randomuser.me/api/portraits/women/44.jpg"
 },
 
 {
-name:"Michael, 26",
-bio:"Gym and hiking",
-photo:"https://randomuser.me/api/portraits/men/76.jpg"
-},
-
-{
-name:"Emma, 23",
-bio:"Artist and photographer",
-photo:"https://randomuser.me/api/portraits/women/65.jpg"
+name:"Mike, 26",
+bio:"Gym and adventure",
+photo:"https://randomuser.me/api/portraits/men/75.jpg"
 }
 
-]; let currentProfile = 0;
+];
+
+let index = 0;
 
 function showProfile(){
-
-document.getElementById("photo").src = profiles[currentProfile].photo;
-
-document.getElementById("name").innerText = profiles[currentProfile].name;
-
-document.getElementById("bio").innerText = profiles[currentProfile].bio;
-
+document.getElementById("photo").src = profiles[index].photo;
+document.getElementById("name").innerText = profiles[index].name;
+document.getElementById("bio").innerText = profiles[index].bio;
 }
 
 function nextProfile(){
+index++;
 
-setTimeout(function(){
-
-currentProfile++;
-
-if(currentProfile >= profiles.length){
-currentProfile = 0;
+if(index >= profiles.length){
+index = 0;
 }
 
 showProfile();
+}
+
+function like(){
+
+document.getElementById("match").style.display="block";
+
+setTimeout(function(){
+
+document.getElementById("match").style.display="none";
+nextProfile();
 
 },1500);
 
 }
 
+function pass(){
+nextProfile();
+}
+
 showProfile();
-
-function likeProfile(){
-alert("You liked this profile ❤️");
-nextProfile();
-}
-
-function passProfile(){
-alert("You passed this profile");
-nextProfile();
-}
 
 </script>
 
