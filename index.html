@@ -295,18 +295,22 @@ photo:"https://randomuser.me/api/portraits/women/65.jpg"
 ]; let currentProfile = 0;
 
 function nextProfile(){
+  document.getElementById("match").style.display="block";
 
-currentProfile++;
+  setTimeout(function(){
+    document.getElementById("match").style.display="none";
 
-if(currentProfile >= profiles.length){
-currentProfile = 0;
+    index++;
+
+    if(index >= profiles.length){
+      index = 0;
+    }
+
+    showProfile();
+
+  },1500);
 }
 
-document.getElementById("name").innerText = profiles[currentProfile].name;
-document.getElementById("bio").innerText = profiles[currentProfile].bio;
-document.getElementById("photo").src = profiles[currentProfile].photo;
-
-}
 
 function like(){
 
