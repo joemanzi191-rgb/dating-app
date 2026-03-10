@@ -65,9 +65,22 @@ color:white;
 </head>
 
 <body> 
-<div id="match" style="display:none; position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#ff4d6d; color:white; padding:15px 25px; border-radius:10px; font-size:22px;">
-🎉 It's a Match!
-</div> 
+<div id="match" style="
+display:none;
+position:fixed;
+top:40%;
+left:50%;
+transform:translate(-50%, -50%);
+background:#ff4d6d;
+color:white;
+padding:25px;
+font-size:28px;
+border-radius:12px;
+z-index:999;
+text-align:center;
+">
+❤️ IT'S A MATCH!
+</div>
 
 <script>
 
@@ -122,8 +135,8 @@ function nextProfile(){
 
 index++;
 
-if(index>=profiles.length){
-index=0;
+if(index >= profiles.length){
+index = 0;
 }
 
 showProfile();
@@ -136,17 +149,18 @@ document.querySelector(".card").style.transform = "translateX(400px) rotate(20de
 document.getElementById("match").style.display = "block";
 
 setTimeout(function(){
+
 document.getElementById("match").style.display = "none";
-nextProfile();
 document.querySelector(".card").style.transform = "translateX(0)";
+nextProfile();
+
 },1500);
 
 }
+  
 
 
 
-
-} 
 
 function pass(){
 
