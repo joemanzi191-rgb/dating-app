@@ -19,9 +19,10 @@ const firebaseConfig = {
   apiKey: "AIzaSyBHEy9ow9e-AEZf6Pd3CwflylyXrdcxML4",
   authDomain: "zedlove-bdfdb.firebaseapp.com",
   projectId: "zedlove-bdfdb",
-  storageBucket: "zedlove-bdfdb.firebasestorage.app",
+  storageBucket: "zedlove-bdfdb.appspot.com",
   messagingSenderId: "697659574975",
-  appId: "1:697659574975:web:48c32cb39cf07c3ed1d40a"
+  appId: "1:697659574975:web:48c32cb39cf07c3ed1d40a",
+  measurementId: "G-1MYD7C0JRG"
 };
 
 // Start Firebase
@@ -35,14 +36,13 @@ db.collection("users").get().then((querySnapshot) => {
 
     const user = doc.data();
 
-    document.getElementById("profiles").innerHTML += `
-    <div style="border:1px solid #ccc;padding:10px;margin:10px;width:250px">
-      <img src="${user.image}" width="200"><br>
-      <b>${user.name}</b><br>
-      Age: ${user.age}<br>
-      ${user.bio}
-    </div>
-    `;
+    document.getElementById("profiles").innerHTML +=
+"<div style='border:1px solid #ccc;padding:10px;margin:10px;width:250px'>" +
+"<img src='" + user.image + "' width='200'><br>" +
+"<b>" + user.name + "</b><br>" +
+"Age: " + user.age + "<br>" +
+user.bio +
+"</div>";
 
   });
 
