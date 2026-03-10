@@ -15,37 +15,36 @@
 
 <script>
 // Firebase config
- const firebaseConfig = {
-   apiKey: "AIzaSyBHEy9ow9e-AEZf6Pd3CwflylyXrdcxML4",
-   authDomain: "zedlove-bdfdb.firebaseapp.com",
-   projectId: "zedlove-bdfdb",
-   storageBucket: "zedlove-bdfdb.firebasestorage.app",
-   messagingSenderId: "697659574975",
-   appId: "1:697659574975:web:48c32cb39cf07c3ed1d40a",
-   measurementId: "G-1MYD7C0JRG"
- };
+const firebaseConfig = {
+  apiKey: "AIzaSyBHEy9ow9e-AEZf6Pd3CwflylyXrdcxML4",
+  authDomain: "zedlove-bdfdb.firebaseapp.com",
+  projectId: "zedlove-bdfdb",
+  storageBucket: "zedlove-bdfdb.firebasestorage.app",
+  messagingSenderId: "697659574975",
+  appId: "1:697659574975:web:48c32cb39cf07c3ed1d40a"
+};
 
- // Start Firebase
- firebase.initializeApp(firebaseConfig);
- const db = firebase.firestore();
+// Start Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 // Load profiles
 db.collection("users").get().then((querySnapshot) => {
 
-querySnapshot.forEach((doc) => {
+  querySnapshot.forEach((doc) => {
 
-const user = doc.data();
+    const user = doc.data();
 
-document.getElementById("profiles").innerHTML += `
-<div style="border:1px solid #ccc;padding:10px;margin:10px;width:250px">
-<img src="${user.image}" width="200"><br>
-<b>${user.name}</b><br>
-Age: ${user.age}<br>
-${user.bio}
-</div>
-`;
+    document.getElementById("profiles").innerHTML += `
+    <div style="border:1px solid #ccc;padding:10px;margin:10px;width:250px">
+      <img src="${user.image}" width="200"><br>
+      <b>${user.name}</b><br>
+      Age: ${user.age}<br>
+      ${user.bio}
+    </div>
+    `;
 
-});
+  });
 
 });
 
