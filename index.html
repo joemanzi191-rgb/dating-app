@@ -21,6 +21,7 @@ border-radius:15px;
 box-shadow:0 5px 20px rgba(0,0,0,0.2);
 text-align:center;
 padding:20px;
+transition: transform 0.3s ease;
 }
 
 img{
@@ -119,6 +120,15 @@ showProfile();
 
 function like(){
 
+document.querySelector(".card").style.transform = "translateX(400px) rotate(20deg)";
+
+setTimeout(function(){
+document.querySelector(".card").style.transform = "translateX(0)";
+nextProfile();
+},300);
+
+}
+
 let match = Math.random();
 
 if(match > 0.6){
@@ -132,6 +142,15 @@ nextProfile();
 } 
 
 function pass(){
+
+document.querySelector(".card").style.transform = "translateX(-400px) rotate(-20deg)";
+
+setTimeout(function(){
+document.querySelector(".card").style.transform = "translateX(0)";
+nextProfile();
+},300);
+
+}
 
 nextProfile();
 
