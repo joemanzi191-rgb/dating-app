@@ -147,6 +147,25 @@ function pass(){
 nextProfile();
 
 }
+let startX = 0;
+
+document.querySelector(".card").addEventListener("touchstart", function(e){
+startX = e.touches[0].clientX;
+});
+
+document.querySelector(".card").addEventListener("touchend", function(e){
+
+let endX = e.changedTouches[0].clientX;
+
+if(endX - startX > 50){
+like();
+}
+
+if(startX - endX > 50){
+pass();
+}
+
+});
 
 </script>
 
