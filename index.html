@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ZedLove</title>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+<title>ZedLove Profiles</title>
 </head>
 
 <body>
 
-<h1>ZedLove Profiles</h1>
+<h1>ZedLove Profiles ❤️</h1>
 
 <div id="profiles"></div>
 
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
 <script>
 
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBHEy9ow9e-AEZf6Pd3CwflylyXrdcxML4",
   authDomain: "zedlove-bdfdb.firebaseapp.com",
@@ -24,28 +26,28 @@ const firebaseConfig = {
   measurementId: "G-1MYD7C0JRG"
 };
 
+// Start Firebase
 firebase.initializeApp(firebaseConfig);
-
 const db = firebase.firestore();
 
+// Load profiles
 db.collection("users").get().then((querySnapshot) => {
-  const profilesDiv = document.getElementById("profiles");
 
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
+querySnapshot.forEach((doc) => {
 
-    profilesDiv.innerHTML += `
-      <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-        <img src="${data.image}" width="150"><br>
-        <b>${data.name}</b><br>
-        Age: ${data.age}<br>
-        Bio: ${data.bio}
-      </div>
-    `;
-  });
+const user = doc.data();
 
-}).catch((error) => {
-  console.log("Error getting profiles:", error);
+document.getElementById("profiles").innerHTML += `
+<div style="border:1px solid #ccc;padding:10px;margin:10px;width:250px">
+<img src="${user.image}" width="200"><br>
+<b>${user.name}</b><br>
+Age: ${user.age}<br>
+${user.bio}
+</div>
+`;
+
+});
+
 });
 
 </script>
