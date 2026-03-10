@@ -239,14 +239,16 @@ color:white;
 background:#f44336;
 color:white;
 }
-
+#card{
+transition: transform 0.3s ease;
+}
 </style>
 
 </head>
 
 <body>
 
-<div class="card">
+<div class="card" id="card">
 
 <img id="photo" src="https://randomuser.me/api/portraits/men/32.jpg">
 
@@ -256,9 +258,9 @@ color:white;
 
 <div class="buttons">
 
-<button class="like" onclick="like()">❤️ Like</button>
+<button class="like" onclick="like()">Like ❤️</button>
 
-<button class="pass" onclick="pass()">❌ Pass</button>
+<button class="pass" onclick="pass()">Pass ❌</button>
 
 </div>
 
