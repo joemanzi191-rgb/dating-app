@@ -294,35 +294,46 @@ photo:"https://randomuser.me/api/portraits/women/65.jpg"
 
 ]; let currentProfile = 0;
 
-function nextProfile(){
-  document.getElementById("match").style.display="block";
+function showProfile(){
 
-  setTimeout(function(){
-    document.getElementById("match").style.display="none";
+document.getElementById("photo").src = profiles[currentProfile].photo;
 
-    index++;
+document.getElementById("name").innerText = profiles[currentProfile].name;
 
-    if(index >= profiles.length){
-      index = 0;
-    }
+document.getElementById("bio").innerText = profiles[currentProfile].bio;
 
-    showProfile();
-
-  },1500);
 }
 
+function nextProfile(){
 
-function like(){
+document.getElementById("match").style.display="block";
 
+setTimeout(function(){
+
+document.getElementById("match").style.display="none";
+
+currentProfile++;
+
+if(currentProfile >= profiles.length){
+currentProfile = 0;
+}
+
+showProfile();
+
+},1500);
+
+}
+
+showProfile();
+
+function likeProfile(){
 alert("You liked this profile ❤️");
 nextProfile();
-
 }
 
-function pass(){
-
+function passProfile(){
+alert("You passed this profile");
 nextProfile();
-
 }
 
 </script>
