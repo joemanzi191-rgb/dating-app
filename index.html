@@ -1,72 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Swipe App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoveConnect</title>
 
 <style>
+
 body{
-background:#ff4d6d;
+margin:0;
 font-family:Arial;
+background:#ff4d6d;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
-margin:0;
 }
 
-.card{
+.screen{
 background:white;
-width:260px;
-padding:15px;
-border-radius:10px;
+padding:20px;
+border-radius:12px;
+width:330px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
 text-align:center;
-box-shadow:0 5px 20px rgba(0,0,0,0.3);
-transition:0.3s;
 }
+
+input{
+width:90%;
+padding:8px;
+margin:5px 0;
+}
+
+button{
+padding:10px 15px;
+margin:5px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.like{background:#ff4d6d;color:white;}
+.pass{background:#ccc;}
 
 .card img{
 width:100%;
 border-radius:10px;
 }
 
-button{
-padding:8px 15px;
-margin:10px;
-border:none;
-border-radius:5px;
-font-size:16px;
-cursor:pointer;
-}
-
-.like{
-background:#ff4d6d;
-color:white;
-}
-
-.pass{
-background:#ddd;
-}
-
 #match{
 display:none;
 position:absolute;
-top:40%;
+top:20%;
 font-size:30px;
 color:white;
 font-weight:bold;
 }
-</style>
 
+#chatBox{
+height:220px;
+overflow:auto;
+border:1px solid #ddd;
+margin-bottom:10px;
+padding:5px;
+text-align:left;
+}
+
+.message{
+background:#eee;
+padding:6px;
+border-radius:6px;
+margin:5px 0;
+}
+
+</style>
 </head>
 
 <body>
 
 <div id="match">❤️ IT'S A MATCH!</div>
 
+<!-- LOGIN -->
+<div id="login" class="screen">
+
+<h2>Login</h2>
+
+<input id="loginUser" placeholder="Username">
+<input id="loginPass" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p>No account?</p>
+
+<button onclick="showSignup()">Sign Up</button>
+
+</div>
+
+<!-- SIGNUP -->
+<div id="signup" class="screen" style="display:none">
+
+<h2>Create Profile</h2>
+
+<input id="newUser" placeholder="Username">
+<input id="newPass" type="password" placeholder="Password">
+<input id="newName" placeholder="Name">
+<input id="newAge" placeholder="Age">
+<input id="newBio" placeholder="Bio">
+<input id="newPhoto" placeholder="Photo URL">
+
+<button onclick="signup()">Create</button>
+
+<button onclick="showLogin()">Back</button>
+
+</div>
+
+<!-- SWIPE -->
+<div id="app" class="screen" style="display:none">
+
+<button onclick="logout()">Logout</button>
+
 <div class="card">
 
-<img id="photo" src="">
-<h2 id="name"></h2>
+<img id="photo">
+
+<h3 id="name"></h3>
+
 <p id="bio"></p>
 
 <button class="like" onclick="like()">❤️ Like</button>
@@ -74,58 +131,120 @@ font-weight:bold;
 
 </div>
 
+</div>
+
+<!-- CHAT -->
+<div id="chat" class="screen" style="display:none">
+
+<h3>Chat</h3>
+
+<div id="chatBox"></div>
+
+<input id="chatInput" placeholder="Type message">
+
+<button onclick="sendMessage()">Send</button>
+
+<button onclick="back()">Back</button>
+
+</div>
+
 <script>
 
-let profiles = [
+let users=JSON.parse(localStorage.getItem("users"))||[];
 
-{
-name:"Alex, 24",
-bio:"Loves music and travel",
-photo:"https://randomuser.me/api/portraits/men/32.jpg"
-},
-
-{
-name:"Emma, 22",
-bio:"Coffee lover and dancer",
-photo:"https://randomuser.me/api/portraits/women/44.jpg"
-},
-
-{
-name:"Mike, 26",
-bio:"Gym and adventure",
-photo:"https://randomuser.me/api/portraits/men/75.jpg"
-}
-
+let profiles=[
+{name:"Emma, 23",bio:"Coffee lover",photo:"https://randomuser.me/api/portraits/women/65.jpg"},
+{name:"Sophia, 25",bio:"Music fan",photo:"https://randomuser.me/api/portraits/women/44.jpg"},
+{name:"Liam, 27",bio:"Gym life",photo:"https://randomuser.me/api/portraits/men/32.jpg"}
 ];
 
-let index = 0;
+let index=0;
+
+function showSignup(){
+login.style.display="none";
+signup.style.display="block";
+}
+
+function showLogin(){
+signup.style.display="none";
+login.style.display="block";
+}
+
+function signup(){
+
+let user={
+username:newUser.value,
+password:newPass.value
+};
+
+users.push(user);
+
+localStorage.setItem("users",JSON.stringify(users));
+
+alert("Account created");
+
+showLogin();
+
+}
+
+function login(){
+
+let u=loginUser.value;
+let p=loginPass.value;
+
+let found=users.find(x=>x.username==u && x.password==p);
+
+if(found){
+
+login.style.display="none";
+app.style.display="block";
+
+showProfile();
+
+}else{
+alert("Wrong login");
+}
+
+}
+
+function logout(){
+
+app.style.display="none";
+login.style.display="block";
+
+}
 
 function showProfile(){
-document.getElementById("photo").src = profiles[index].photo;
-document.getElementById("name").innerText = profiles[index].name;
-document.getElementById("bio").innerText = profiles[index].bio;
+
+photo.src=profiles[index].photo;
+name.innerText=profiles[index].name;
+bio.innerText=profiles[index].bio;
+
 }
 
 function nextProfile(){
+
 index++;
 
-if(index >= profiles.length){
-index = 0;
+if(index>=profiles.length){
+index=0;
 }
 
 showProfile();
+
 }
 
 function like(){
 
-document.getElementById("match").style.display="block";
+match.style.display="block";
 
 setTimeout(function(){
 
-document.getElementById("match").style.display="none";
-nextProfile();
+match.style.display="none";
+app.style.display="none";
+chat.style.display="block";
 
-},1500);
+},1200);
 
 }
 
@@ -133,7 +252,32 @@ function pass(){
 nextProfile();
 }
 
-showProfile();
+function back(){
+
+chat.style.display="none";
+app.style.display="block";
+
+nextProfile();
+
+}
+
+function sendMessage(){
+
+let text=chatInput.value;
+
+if(text=="")return;
+
+let div=document.createElement("div");
+
+div.className="message";
+
+div.innerText=text;
+
+chatBox.appendChild(div);
+
+chatInput.value="";
+
+}
 
 </script>
 
