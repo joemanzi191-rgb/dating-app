@@ -294,27 +294,19 @@ bio:"Artist and photographer",
 photo:"https://randomuser.me/api/portraits/women/65.jpg"
 }
 
-];
-
-let index=0;
-
-function showProfile(){
-
-document.getElementById("photo").src=profiles[index].photo;
-document.getElementById("name").innerText=profiles[index].name;
-document.getElementById("bio").innerText=profiles[index].bio;
-
-}
+]; let currentProfile = 0;
 
 function nextProfile(){
 
-index++;
+currentProfile++;
 
-if(index>=profiles.length){
-index=0;
+if(currentProfile >= profiles.length){
+currentProfile = 0;
 }
 
-showProfile();
+document.getElementById("name").innerText = profiles[currentProfile].name;
+document.getElementById("bio").innerText = profiles[currentProfile].bio;
+document.getElementById("photo").src = profiles[currentProfile].photo;
 
 }
 
