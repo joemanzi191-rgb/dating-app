@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>ZedLove Dating</title>
-
+<title>ZedLove</title>
 <style>
 body{
 font-family: Arial;
-background:#f5f5f5;
+background:#f2f2f2;
 text-align:center;
 }
 
@@ -29,109 +28,82 @@ padding:10px 20px;
 margin:10px;
 border:none;
 border-radius:5px;
-font-size:16px;
 }
 
-.like{
-background:#ff4d6d;
-color:white;
-}
-
-.pass{
-background:#ccc;
-}
+.pass{background:gray;color:white;}
+.like{background:#ff4d6d;color:white;}
 </style>
-
 </head>
 
 <body>
 
-<h1>ZedLove ❤️</h1>
+<h2>ZedLove ❤️</h2>
 
 <div class="card">
-
-<img id="profileImage">
-
-<h2 id="name"></h2>
-
+<img id="photo">
+<h3 id="name"></h3>
 <p id="age"></p>
-
 <p id="bio"></p>
 
-<button class="pass" onclick="pass()">Pass</button>
-<button class="like" onclick="like()">Like</button>
-
+<button class="pass" onclick="next()">Pass</button>
+<button class="like" onclick="next()">Like</button>
 </div>
 
+<script type="module">
 
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
-<script>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyHBEy9ow9e-AEZf6Pd3Cwfly1yXrdcxML4",
-authDomain: "zedlove-bdfdb.firebaseapp.com",
-projectId: "zedlove-bdfdb",
-storageBucket: "zedlove-bdfdb.appspot.com",
-messagingSenderId: "697655574975",
-appId: "1:697655574975:web:deaacb6e056d8933d1d40a",
-measurementId: "G-9KLGELWNWK"
+apiKey: "PASTE YOUR API KEY",
+authDomain: "zdlove-bdfdb.firebaseapp.com",
+projectId: "zdlove-bdfdb",
+storageBucket: "zdlove-bdfdb.appspot.com",
+messagingSenderId: "123456",
+appId: "123456"
 };
 
-firebase.initializeApp(firebaseConfig);
-
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 let profiles = [];
-let current = 0;
+let index = 0;
 
 async function loadProfiles(){
 
-const snapshot = await db.collection("users").get();
+const querySnapshot = await getDocs(collection(db,"users"));
 
-snapshot.forEach(doc=>{
+querySnapshot.forEach((doc)=>{
 profiles.push(doc.data());
 });
 
 showProfile();
-
 }
 
 function showProfile(){
 
-if(profiles.length === 0){
+if(profiles.length==0){
 document.getElementById("name").innerText="No profiles";
 return;
 }
 
-const user = profiles[current];
+let p = profiles[index];
 
-document.getElementById("profileImage").src = user.image;
-document.getElementById("name").innerText = user.name;
-document.getElementById("age").innerText = "Age: " + user.age;
-document.getElementById("bio").innerText = user.bio;
-
+document.getElementById("photo").src = p.image;
+document.getElementById("name").innerText = p.name;
+document.getElementById("age").innerText = "Age: " + p.age;
+document.getElementById("bio").innerText = p.bio;
 }
 
-function like(){
-nextProfile();
-}
+window.next = function(){
 
-function pass(){
-nextProfile();
-}
+index++;
 
-function nextProfile(){
-
-current++;
-
-if(current >= profiles.length){
-current = 0;
+if(index>=profiles.length){
+index=0;
 }
 
 showProfile();
-
 }
 
 loadProfiles();
