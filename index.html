@@ -1,224 +1,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LoveConnect</title>
+<title>ZedLove Dating</title>
 
 <style>
-
 body{
-margin:0;
-font-family:Arial;
-background:#ff4d6d;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-
-.screen{
-background:white;
-padding:20px;
-border-radius:12px;
-width:330px;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
+font-family: Arial;
+background:#f5f5f5;
 text-align:center;
 }
 
-input{
-width:90%;
-padding:8px;
-margin:5px 0;
+.card{
+width:300px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
-button{
-padding:10px 15px;
-margin:5px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-.like{background:#ff4d6d;color:white;}
-.pass{background:#ccc;}
-
-.card img{
+img{
 width:100%;
 border-radius:10px;
 }
 
-#match{
-display:none;
-position:absolute;
-top:20%;
-font-size:30px;
+button{
+padding:10px 20px;
+margin:10px;
+border:none;
+border-radius:5px;
+font-size:16px;
+}
+
+.like{
+background:#ff4d6d;
 color:white;
-font-weight:bold;
 }
 
-#chatBox{
-height:220px;
-overflow:auto;
-border:1px solid #ddd;
-margin-bottom:10px;
-padding:5px;
-text-align:left;
+.pass{
+background:#ccc;
 }
-
-.message{
-background:#eee;
-padding:6px;
-border-radius:6px;
-margin:5px 0;
-}
-
 </style>
+
 </head>
 
 <body>
 
-<div id="match">❤️ IT'S A MATCH!</div>
-
-<!-- LOGIN -->
-<div id="login" class="screen">
-
-<h2>Login</h2>
-
-<input id="loginUser" placeholder="Username">
-<input id="loginPass" type="password" placeholder="Password">
-
-<button onclick="login()">Login</button>
-
-<p>No account?</p>
-
-<button onclick="showSignup()">Sign Up</button>
-
-</div>
-
-<!-- SIGNUP -->
-<div id="signup" class="screen" style="display:none">
-
-<h2>Create Profile</h2>
-
-<input id="newUser" placeholder="Username">
-<input id="newPass" type="password" placeholder="Password">
-<input id="newName" placeholder="Name">
-<input id="newAge" placeholder="Age">
-<input id="newBio" placeholder="Bio">
-<input id="newPhoto" placeholder="Photo URL">
-
-<button onclick="signup()">Create</button>
-
-<button onclick="showLogin()">Back</button>
-
-</div>
-
-<!-- SWIPE -->
-<div id="app" class="screen" style="display:none">
-
-<button onclick="logout()">Logout</button>
+<h1>ZedLove ❤️</h1>
 
 <div class="card">
 
-<img id="photo">
+<img id="profileImage">
 
-<h3 id="name"></h3>
+<h2 id="name"></h2>
+
+<p id="age"></p>
 
 <p id="bio"></p>
 
-<button class="like" onclick="like()">❤️ Like</button>
-<button class="pass" onclick="pass()">❌ Pass</button>
+<button class="pass" onclick="pass()">Pass</button>
+<button class="like" onclick="like()">Like</button>
 
 </div>
 
-</div>
-
-<!-- CHAT -->
-<div id="chat" class="screen" style="display:none">
-
-<h3>Chat</h3>
-
-<div id="chatBox"></div>
-
-<input id="chatInput" placeholder="Type message">
-
-<button onclick="sendMessage()">Send</button>
-
-<button onclick="back()">Back</button>
-
-</div>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
 <script>
 
-let users=JSON.parse(localStorage.getItem("users"))||[];
-
-let profiles=[
-{name:"Emma, 23",bio:"Coffee lover",photo:"https://randomuser.me/api/portraits/women/65.jpg"},
-{name:"Sophia, 25",bio:"Music fan",photo:"https://randomuser.me/api/portraits/women/44.jpg"},
-{name:"Liam, 27",bio:"Gym life",photo:"https://randomuser.me/api/portraits/men/32.jpg"}
-];
-
-let index=0;
-
-function showSignup(){
-login.style.display="none";
-signup.style.display="block";
-}
-
-function showLogin(){
-signup.style.display="none";
-login.style.display="block";
-}
-
-function signup(){
-
-let user={
-username:newUser.value,
-password:newPass.value
+const firebaseConfig = {
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_PROJECT.firebaseapp.com",
+projectId: "YOUR_PROJECT_ID",
+storageBucket: "YOUR_PROJECT.appspot.com",
+messagingSenderId: "YOUR_ID",
+appId: "YOUR_APP_ID"
 };
 
-users.push(user);
+firebase.initializeApp(firebaseConfig);
 
-localStorage.setItem("users",JSON.stringify(users));
+const db = firebase.firestore();
 
-alert("Account created");
+let profiles = [];
+let index = 0;
 
-showLogin();
+db.collection("users").get().then((snapshot)=>{
 
-}
-
-function login(){
-
-let u=loginUser.value;
-let p=loginPass.value;
-
-let found=users.find(x=>x.username==u && x.password==p);
-
-if(found){
-
-login.style.display="none";
-app.style.display="block";
+snapshot.forEach((doc)=>{
+profiles.push(doc.data());
+});
 
 showProfile();
 
-}else{
-alert("Wrong login");
-}
-
-}
-
-function logout(){
-
-app.style.display="none";
-login.style.display="block";
-
-}
+});
 
 function showProfile(){
 
-photo.src=profiles[index].photo;
-name.innerText=profiles[index].name;
-bio.innerText=profiles[index].bio;
+if(profiles.length === 0) return;
+
+let p = profiles[index];
+
+document.getElementById("profileImage").src = p.Image;
+document.getElementById("name").innerText = p.name;
+document.getElementById("age").innerText = "Age: " + p.age;
+document.getElementById("bio").innerText = p.Bio;
 
 }
 
@@ -226,8 +111,8 @@ function nextProfile(){
 
 index++;
 
-if(index>=profiles.length){
-index=0;
+if(index >= profiles.length){
+index = 0;
 }
 
 showProfile();
@@ -236,46 +121,15 @@ showProfile();
 
 function like(){
 
-match.style.display="block";
+alert("It's a Match ❤️");
 
-setTimeout(function(){
-
-match.style.display="none";
-app.style.display="none";
-chat.style.display="block";
-
-},1200);
+nextProfile();
 
 }
 
 function pass(){
-nextProfile();
-}
-
-function back(){
-
-chat.style.display="none";
-app.style.display="block";
 
 nextProfile();
-
-}
-
-function sendMessage(){
-
-let text=chatInput.value;
-
-if(text=="")return;
-
-let div=document.createElement("div");
-
-div.className="message";
-
-div.innerText=text;
-
-chatBox.appendChild(div);
-
-chatInput.value="";
 
 }
 
