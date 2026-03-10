@@ -256,9 +256,9 @@ transition: transform 0.3s ease;
 
 <div class="buttons">
 
-<button class="like" onclick="like()">Like ❤️</button>
+<button onclick="likeProfile()">❤️ Like</button>
 
-<button class="pass" onclick="pass()">Pass ❌</button>
+<button onclick="passProfile()">❌ Pass</button>
 
 </div>
 
@@ -306,11 +306,7 @@ document.getElementById("bio").innerText = profiles[currentProfile].bio;
 
 function nextProfile(){
 
-document.getElementById("match").style.display="block";
-
 setTimeout(function(){
-
-document.getElementById("match").style.display="none";
 
 currentProfile++;
 
