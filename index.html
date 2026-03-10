@@ -119,10 +119,17 @@ showProfile();
 
 function like(){
 
-alert("You liked this profile ❤️");
+let match = Math.random();
+
+if(match > 0.6){
+alert("🎉 It's a Match!");
+}else{
+alert("❤️ You liked this profile");
+}
+
 nextProfile();
 
-}
+} 
 
 function pass(){
 
