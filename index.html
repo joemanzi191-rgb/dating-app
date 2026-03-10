@@ -1,112 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>ZedLove</title>
-<style>
-body{
-font-family: Arial;
-background:#f2f2f2;
-text-align:center;
-}
-
-.card{
-width:300px;
-margin:auto;
-background:white;
-padding:20px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
-}
-
-img{
-width:100%;
-border-radius:10px;
-}
-
-button{
-padding:10px 20px;
-margin:10px;
-border:none;
-border-radius:5px;
-}
-
-.pass{background:gray;color:white;}
-.like{background:#ff4d6d;color:white;}
-</style>
+  <title>ZedLove</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
 
-<h2>ZedLove ❤️</h2>
+<h1>ZedLove Profiles</h1>
 
-<div class="card">
-<img id="photo">
-<h3 id="name"></h3>
-<p id="age"></p>
-<p id="bio"></p>
+<div id="profiles"></div>
 
-<button class="pass" onclick="next()">Pass</button>
-<button class="like" onclick="next()">Like</button>
-</div>
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<script>
 
 const firebaseConfig = {
-apiKey: "PASTE YOUR API KEY",
-authDomain: "zdlove-bdfdb.firebaseapp.com",
-projectId: "zdlove-bdfdb",
-storageBucket: "zdlove-bdfdb.appspot.com",
-messagingSenderId: "123456",
-appId: "123456"
+  apiKey: "AIzaSyBHEy9ow9e-AEZf6Pd3CwflylyXrdcxML4",
+  authDomain: "zedlove-bdfdb.firebaseapp.com",
+  projectId: "zedlove-bdfdb",
+  storageBucket: "zedlove-bdfdb.firebasestorage.app",
+  messagingSenderId: "697659574975",
+  appId: "1:697659574975:web:48c32cb39cf07c3ed1d40a",
+  measurementId: "G-1MYD7C0JRG"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
 
-let profiles = [];
-let index = 0;
+const db = firebase.firestore();
 
-async function loadProfiles(){
+db.collection("users").get().then((querySnapshot) => {
+  const profilesDiv = document.getElementById("profiles");
 
-const querySnapshot = await getDocs(collection(db,"users"));
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
 
-querySnapshot.forEach((doc)=>{
-profiles.push(doc.data());
+    profilesDiv.innerHTML += `
+      <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+        <img src="${data.image}" width="150"><br>
+        <b>${data.name}</b><br>
+        Age: ${data.age}<br>
+        Bio: ${data.bio}
+      </div>
+    `;
+  });
+
+}).catch((error) => {
+  console.log("Error getting profiles:", error);
 });
-
-showProfile();
-}
-
-function showProfile(){
-
-if(profiles.length==0){
-document.getElementById("name").innerText="No profiles";
-return;
-}
-
-let p = profiles[index];
-
-document.getElementById("photo").src = p.image;
-document.getElementById("name").innerText = p.name;
-document.getElementById("age").innerText = "Age: " + p.age;
-document.getElementById("bio").innerText = p.bio;
-}
-
-window.next = function(){
-
-index++;
-
-if(index>=profiles.length){
-index=0;
-}
-
-showProfile();
-}
-
-loadProfiles();
 
 </script>
 
