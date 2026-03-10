@@ -132,12 +132,16 @@ showProfile();
 
 function like(){
 
+document.querySelector(".card").style.transform = "translateX(400px) rotate(20deg)";
 document.getElementById("match").style.display = "block";
 
 setTimeout(function(){
 document.getElementById("match").style.display = "none";
 nextProfile();
+document.querySelector(".card").style.transform = "translateX(0)";
 },1500);
+
+}
 
 
 
