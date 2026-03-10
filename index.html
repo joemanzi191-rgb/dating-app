@@ -123,24 +123,15 @@ showProfile();
 
 function like(){
 
-document.querySelector(".card").style.transform = "translateX(400px) rotate(20deg)";
+document.getElementById("match").style.display = "block";
 
 setTimeout(function(){
-document.querySelector(".card").style.transform = "translateX(0)";
+document.getElementById("match").style.display = "none";
 nextProfile();
-},300);
+},1500);
 
-}
 
-let match = Math.random();
 
-if(match > 0.6){
-alert("🎉 It's a Match!");
-}else{
-alert("❤️ You liked this profile");
-}
-
-nextProfile();
 
 } 
 
@@ -153,9 +144,7 @@ document.querySelector(".card").style.transform = "translateX(0)";
 nextProfile();
 },300);
 
-}
 
-nextProfile();
 
 }
 let startX = 0;
